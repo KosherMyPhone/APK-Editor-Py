@@ -1,0 +1,18 @@
+[project]
+name = "apk-editor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "appdirs>=1.4.4",
+    "psutil>=6.1.0",
+    "requests>=2.32.3",
+]
+
+[project.scripts]
+hello = "apk_editor:hello"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
