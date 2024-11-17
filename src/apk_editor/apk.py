@@ -17,7 +17,7 @@ class APK:
         self.path = path
         self.temp_dir: TemporaryDirectory = None
 
-    def decompile(self):
+    def decompile(self) -> DecompiledAPK:
         self.temp_dir = TemporaryDirectory()
         output_dir = Path(self.temp_dir.name)
         subprocess.run(
@@ -36,6 +36,8 @@ class APK:
             check=True,
             capture_output=True,
         )
+
+        return DecompiledAPK(output_dir)
 
     def cleanup(self):
         self.temp_dir.cleanup()
