@@ -4,12 +4,15 @@ import random
 from apk_editor.constants import apkeditor
 from tempfile import TemporaryDirectory
 
+from apk_editor.smali import SmaliUtils
+
 
 class DecompiledAPK:
     def __init__(self, path: Path):
         self.path = path
         self.androidmanifest: Path = self.path / "AndroidManifest.xml.json"
         self.smali_path: Path = self.path / "smali"
+        self.smali_utils = SmaliUtils(self)
 
 
 class APK:
