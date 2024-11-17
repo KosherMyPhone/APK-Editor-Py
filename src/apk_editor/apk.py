@@ -1,6 +1,5 @@
 from pathlib import Path
 import subprocess
-import random
 from apk_editor.constants import apkeditor
 from tempfile import TemporaryDirectory
 
