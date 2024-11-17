@@ -14,10 +14,11 @@ class DecompiledAPK:
 class APK:
     def __init__(self, path: Path):
         self.path = path
+        self.temp_dir: TemporaryDirectory = None
 
     def decompile(self):
-        temp_dir = TemporaryDirectory()
-        output_dir = Path(temp_dir.name)
+        self.temp_dir = TemporaryDirectory()
+        output_dir = Path(self.temp_dir.name)
         subprocess.run(
             [
                 "java",
@@ -34,3 +35,6 @@ class APK:
             check=True,
             capture_output=True,
         )
+
+    def cleanup(self):
+        self.temp_dir.cleanup()
