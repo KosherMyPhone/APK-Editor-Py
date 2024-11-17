@@ -3,15 +3,12 @@ import subprocess
 from apk_editor.constants import apkeditor
 from tempfile import TemporaryDirectory
 
-from apk_editor.smali import SmaliUtils
-
 
 class DecompiledAPK:
     def __init__(self, path: Path):
         self.path = path
         self.androidmanifest: Path = self.path / "AndroidManifest.xml.json"
         self.smali_path: Path = self.path / "smali"
-        self.smali_utils = SmaliUtils(self)
 
 
 class APK:
@@ -21,7 +18,7 @@ class APK:
 
     def decompile(self) -> DecompiledAPK:
         self.temp_dir = TemporaryDirectory()
-        output_dir = Path(self.temp_dir.name)
+        output_dir = Path(self.temp_dir.name + "/decompiled")
         subprocess.run(
             [
                 "java",
