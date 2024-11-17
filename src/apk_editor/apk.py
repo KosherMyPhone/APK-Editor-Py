@@ -8,7 +8,8 @@ from tempfile import TemporaryDirectory
 class DecompiledAPK:
     def __init__(self, path: Path):
         self.path = path
-        self.androidmanifest = self.path / "AndroidManifest.xml.json"
+        self.androidmanifest: Path = self.path / "AndroidManifest.xml.json"
+        self.smali_path: Path = self.path / "smali"
 
 
 class APK:
