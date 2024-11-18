@@ -61,6 +61,17 @@ APKInfo = namedtuple(
 
 
 def get_apk_info(apk_path: Path) -> APKInfo:
+    """
+    Extract information from an APK file using apkeditor's info command.
+
+    Args:
+        apk_path: The path to the APK file.
+
+    Returns:
+        An APKInfo tuple containing the package name, version code, version name,
+        app name, app icon path, application class, and main activity class.
+    """
+
     get_info_cmd = ["java", "-jar", apkeditor, "info", "-i", apk_path, "-t", "json"]
     result = subprocess.run(get_info_cmd, check=True, capture_output=True)
     results = json.loads(result.stdout)
