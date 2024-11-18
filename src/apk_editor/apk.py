@@ -78,11 +78,11 @@ def get_apk_info(apk_path: Path) -> APKInfo:
     res_fmt = {list(d.keys())[0]: list(d.values())[0] for d in results}
     # return res_fmt
     return APKInfo(
-        res_fmt["package"],
-        res_fmt["VersionCode"],
-        res_fmt["VersionName"],
-        res_fmt["AppName"],
-        res_fmt["AppIcon"],
-        res_fmt["application-class"],
-        res_fmt["activity-main"],
+        res_fmt.get("package", None),
+        res_fmt.get("VersionCode", None),
+        res_fmt.get("VersionName", None),
+        res_fmt.get("AppName", None),
+        res_fmt.get("AppIcon", None),
+        res_fmt.get("application-class", None),
+        res_fmt.get("activity-main", None),
     )
