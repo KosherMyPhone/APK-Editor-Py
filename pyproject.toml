@@ -1,7 +1,7 @@
 [project]
 name = "apk-editor"
 version = "0.1.1"
-description = "Add your description here"
+description = "apkeditor.jar wrapper written in python"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-hello = "apk_editor:hello"
+dependencies = "apk_editor:dependencies"
 
 [build-system]
 requires = ["hatchling"]
