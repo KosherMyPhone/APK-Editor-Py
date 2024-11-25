@@ -1,1 +1,3 @@
 *.apk filter=lfs diff=lfs merge=lfs -text
+*.pk8 filter=lfs diff=lfs merge=lfs -text
+*.x509.pem filter=lfs diff=lfs merge=lfs -text

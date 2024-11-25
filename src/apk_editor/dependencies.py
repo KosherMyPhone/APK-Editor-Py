@@ -1,16 +1,15 @@
-from enum import Enum
+import argparse
 import os
-from pathlib import Path
 import shutil
 import stat
+from enum import Enum
+from pathlib import Path
 
 import psutil
 import requests
 
-from apk_editor.constants import binaries_dir, apkeditor_release_url, apkeditor_version
+from apk_editor.constants import apkeditor_release_url, apkeditor_version, binaries_dir
 from apk_editor.logger import logger
-import argparse
-
 from apk_editor.utils import download_file
 
 
@@ -76,10 +75,14 @@ class DependencyGetter:
                 )
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("type", choices=["local", "remote"])
     args = parser.parse_args()
     logger.info(f"Getting {args.type} dependencies")
     DependencyGetter().get_dependencies(ConnectionType(args.type))
     logger.info("Completed Successfully")
+
+
+if __name__ == "__main__":
+    main()
