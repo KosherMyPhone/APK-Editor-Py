@@ -1,9 +1,10 @@
-from collections import namedtuple
 import json
-from pathlib import Path
 import subprocess
-from apk_editor.constants import apkeditor
+from collections import namedtuple
+from pathlib import Path
 from tempfile import TemporaryDirectory
+
+from apk_editor.constants import apkeditor
 
 
 class DecompiledAPK:
@@ -41,6 +42,24 @@ class APK:
 
         self.decompiled_apk = DecompiledAPK(output_dir)
         return self.decompiled_apk
+
+    def compile(self):
+        output_file = Path(self.temp_dir.name + "/compiled.apk")
+        subprocess.run(
+            [
+                "java",
+                "-jar",
+                apkeditor,
+                "build",
+                "-i",
+                self.decompiled_apk.path,
+                "-o",
+                output_file,
+            ],
+            check=True,
+            capture_output=True,
+        )
+        return output_file
 
     def cleanup(self):
         self.temp_dir.cleanup()
