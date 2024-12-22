@@ -11,6 +11,7 @@ class DecompiledAPK:
     def __init__(self, path: Path):
         self.path = path
         self.androidmanifest: Path = self.path / "AndroidManifest.xml.json"
+        self.resources_arsc: Path = self.path / "resources" / "resources.arsc.json"
         self.smali_path: Path = self.path / "smali"
 
 

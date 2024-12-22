@@ -12,6 +12,7 @@ def test_apk():
     apk = APK(test_apk_path)
     decompiled_apk = apk.decompile()
     assert decompiled_apk.androidmanifest.is_file(), "AndroidManifest.xml not found"
+    assert decompiled_apk.resources_arsc.is_file(), "resources.arsc not found"
     assert decompiled_apk.smali_path.is_dir(), "smali directory not found"
     smali_utils = SmaliUtils(decompiled_apk)
     main_activity_path = smali_utils.find_activity_or_class(
