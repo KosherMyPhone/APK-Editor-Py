@@ -8,7 +8,7 @@ from pathlib import Path
 import psutil
 import requests
 
-from apk_editor.constants import apkeditor_release_url, apkeditor_version, binaries_dir
+from apk_editor.constants import APKEDITOR_RELEASE_URL, APKEDITOR_VERSION, BINARIES_DIR
 from apk_editor.logger import logger
 from apk_editor.utils import download_file
 
@@ -20,7 +20,7 @@ class ConnectionType(Enum):
 
 class DependencyGetter:
     def __init__(self):
-        self.deps_dir = binaries_dir
+        self.deps_dir = BINARIES_DIR
         if not self.deps_dir.is_dir():
             self.deps_dir.mkdir(parents=True)
         else:
@@ -60,12 +60,12 @@ class DependencyGetter:
         raise FileNotFoundError("could not find local dependencies")
 
     def get_remote_deps(self):
-        with requests.get(apkeditor_release_url) as r:
+        with requests.get(APKEDITOR_RELEASE_URL) as r:
             release = r.json()
         for asset in release["assets"]:
             if (
                 asset["name"].casefold().startswith("apkeditor")
-                and apkeditor_version in asset["name"]
+                and APKEDITOR_VERSION in asset["name"]
                 and asset["name"].endswith(".jar")
             ):
                 dl_folder = self.deps_dir / "apkeditor"

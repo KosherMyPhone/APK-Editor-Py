@@ -2,13 +2,13 @@ from pathlib import Path
 
 import appdirs
 
-data_dir = Path(appdirs.user_data_dir("apk-editor-py", "KosherMyPhone"))
-binaries_dir = data_dir / "binaries"
+DATA_DIR = Path(appdirs.user_data_dir("apk-editor-py", "KosherMyPhone"))
+BINARIES_DIR = DATA_DIR / "binaries"
 
-apksigner = binaries_dir / "apksigner" / "apksigner.jar"
+APKSIGNER = BINARIES_DIR / "apksigner" / "apksigner.jar"
 
 
-apkeditor_version = "1.4.1"
-apkeditor_release_url = f"https://api.github.com/repos/reandroid/apkeditor/releases/tags/V{apkeditor_version}"
+APKEDITOR_VERSION = "1.4.1"
+APKEDITOR_RELEASE_URL = f"https://api.github.com/repos/reandroid/apkeditor/releases/tags/V{APKEDITOR_VERSION}"
 
-apkeditor = binaries_dir / "apkeditor" / "apkeditor.jar"
+APKEDITOR = BINARIES_DIR / "apkeditor" / "apkeditor.jar"

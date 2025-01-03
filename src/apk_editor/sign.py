@@ -1,9 +1,8 @@
-import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
-from apk_editor.constants import apksigner
+from apk_editor.constants import APKSIGNER
 
 
 @dataclass
@@ -12,11 +11,11 @@ class SigningKey:
     pk8_path: Path
 
 
-def sign_apk(apk_path: Path, signing_key: SigningKey, output_path: Path = None) -> None:
+def sign_apk(apk_path: Path, signing_key: SigningKey, output_path: Path | None = None) -> None:
     sign_cmd = [
         "java",
         "-jar",
-        apksigner,
+        APKSIGNER,
         "sign",
         "--in",
         apk_path,

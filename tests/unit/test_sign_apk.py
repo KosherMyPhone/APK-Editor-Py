@@ -2,7 +2,7 @@ import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from apk_editor.constants import apksigner
+from apk_editor.constants import APKSIGNER
 from apk_editor.sign import SigningKey, sign_apk
 
 apks_dir = Path(__file__).parents[1] / "apks"
@@ -20,7 +20,7 @@ def test_sign_apk():
     check_cert_cmd = [
         "java",
         "-jar",
-        apksigner,
+        APKSIGNER,
         "verify",
         "--in",
         out_path,
