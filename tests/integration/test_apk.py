@@ -3,7 +3,7 @@ from zipfile import ZipFile
 
 from apk_editor import SmaliUtils
 from apk_editor.apk import APK, get_apk_info
-from apk_editor.arsc import ARSC
+from apk_editor.arsc import ARSC, ComplexARSCEntry
 
 apks_dir = Path(__file__).parents[1] / "apks"
 test_apk_path = apks_dir / "open_recents.apk"
@@ -22,9 +22,12 @@ def test_apk():
     assert main_activity_path.is_file(), "MainActivity not found"
     arsc = ARSC(decompiled_apk)
     assert "string" in arsc.specs, "String spec not found"
-    app_name = arsc.specs["string"].default.entries["app_name"]["value"]
-    assert app_name["data"] == "Recent apps", "Invalid App Name"
-    app_name["data"] = "New App Name"
+    app_name = arsc.specs["string"].default.entries["app_name"]
+    assert not isinstance(
+        app_name, ComplexARSCEntry
+    ), "Invalid entry type"  # make pyright happy
+    assert app_name.value.data == "Recent apps", "Invalid App Name"
+    app_name.value.data = "New App Name"
     arsc.save()
     compiled_apth = apk.compile()
     assert compiled_apth.is_file(), "compiled.apk not found"
