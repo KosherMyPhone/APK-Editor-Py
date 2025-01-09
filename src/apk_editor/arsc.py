@@ -22,6 +22,7 @@ class ARSCType:
     id: int
     config: dict
     entries: dict[str, dict]
+    entries_list: list[dict]  # cuz what if we need to add new entries
 
 
 @dataclass
@@ -60,7 +61,11 @@ class ARSC:
                 for entry in type_["entries"]:
                     entries[entry["entry_name"]] = entry
                 types[type_config] = ARSCType(
-                    type_["name"], type_["id"], type_["config"], entries
+                    type_["name"],
+                    type_["id"],
+                    type_["config"],
+                    entries,
+                    type_["entries"],
                 )
             self.specs[spec_name] = ARSCSpec(spec_name, spec["spec"]["id"], types)
 
