@@ -1,6 +1,6 @@
 [project]
 name = "apk-editor"
-version = "0.1.3"
+version = "0.1.4"
 description = "apkeditor.jar wrapper written in python"
 readme = "README.md"
 requires-python = ">=3.12"
