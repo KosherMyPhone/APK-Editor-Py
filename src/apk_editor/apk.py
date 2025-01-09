@@ -1,6 +1,6 @@
 import json
 import subprocess
-from collections import namedtuple
+from dataclasses import dataclass
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -12,6 +12,11 @@ class DecompiledAPK:
         self.path = path
         self.androidmanifest: Path = self.path / "AndroidManifest.xml.json"
         self.smali_path: Path = self.path / "smali"
+        self.smali_dir: Path = self.smali_path  # I don't want to make breaking changes. But I want to use dir where appropriate.
+        self.res_dir: Path = self.path / "res-json" / "res"
+        self.root_dir: Path = self.path / "root"
+        self.root_res_dir: Path = self.root_dir / "res"
+        self.resources_arsc: Path = self.path / "resources" / "resources.arsc.json"
 
 
 class APK:
@@ -65,18 +70,15 @@ class APK:
         self.temp_dir.cleanup()
 
 
-APKInfo = namedtuple(
-    "APKInfo",
-    [
-        "package_name",
-        "version_code",
-        "version_name",
-        "app_name",
-        "app_icon_path",
-        "application_class",
-        "main_activity",
-    ],
-)
+@dataclass
+class APKInfo:
+    package_name: str
+    version_code: str
+    version_name: str
+    app_name: str
+    app_icon_path: str
+    application_class: str
+    main_activity: str
 
 
 def get_apk_info(apk_path: Path) -> APKInfo:
