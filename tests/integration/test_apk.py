@@ -2,7 +2,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from apk_editor import SmaliUtils
-from apk_editor.apk import APK
+from apk_editor.apk import APK, get_apk_info
 from apk_editor.arsc import ARSC
 
 apks_dir = Path(__file__).parents[1] / "apks"
@@ -23,8 +23,10 @@ def test_apk():
     assert main_activity_path.is_file(), "MainActivity not found"
     arsc = ARSC(decompiled_apk)
     assert "string" in arsc.specs, "String spec not found"
-    app_name = arsc.specs["string"].get_type({}).entries[0]["value"]["data"]
-    assert app_name == "Recent apps", "Invalid App Name"
+    app_name = arsc.specs["string"].default.entries["app_name"]["value"]
+    assert app_name["data"] == "Recent apps", "Invalid App Name"
+    app_name["data"] = "New App Name"
+    arsc.save()
     compiled_apth = apk.compile()
     assert compiled_apth.is_file(), "compiled.apk not found"
     with ZipFile(compiled_apth, "r") as zf:
@@ -37,5 +39,7 @@ def test_apk():
                 "res/mipmap-hdpi/ic_launcher.png",
             ]
         ), "APK Not compiled properly"
+        apk_info = get_apk_info(compiled_apth)
+        assert apk_info.app_name == "New App Name", "App Name not changed"
     apk.cleanup()
     assert Path(apk.temp_dir.name).exists() is False

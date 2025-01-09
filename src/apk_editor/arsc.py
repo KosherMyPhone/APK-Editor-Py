@@ -21,7 +21,7 @@ class ARSCType:
     name: str
     id: int
     config: dict
-    entries: dict
+    entries: dict[str, dict]
 
 
 @dataclass
@@ -32,6 +32,10 @@ class ARSCSpec:
 
     def get_type(self, config: dict) -> ARSCType:
         return self.types[tuple(sorted(config.items()))]
+
+    @property
+    def default(self) -> ARSCType:
+        return self.get_type({})
 
 
 class ARSC:
@@ -46,16 +50,20 @@ class ARSC:
 
         for spec in specs:
             if not spec["types"]:
-                continue
+                continue  # apkanalyzer told me its 'attr'. But apkeditor gives me no info, so I skip it.
+                # empty anyway so should be fine
             spec_name = spec["types"][0]["name"]
             types = {}
             for type_ in spec["types"]:
                 type_config = tuple(sorted(type_["config"].items()))
+                entries: dict[str, dict] = {}
+                for entry in type_["entries"]:
+                    entries[entry["entry_name"]] = entry
                 types[type_config] = ARSCType(
-                    type_["name"], type_["id"], type_["config"], type_["entries"]
+                    type_["name"], type_["id"], type_["config"], entries
                 )
             self.specs[spec_name] = ARSCSpec(spec_name, spec["spec"]["id"], types)
 
-        def save(self):
-            with self.arsc_path.open("wb") as f:
-                json.dump(self.arsc_data, f)
+    def save(self):
+        with self.arsc_path.open("w") as f:
+            json.dump(self.arsc_data, f)
