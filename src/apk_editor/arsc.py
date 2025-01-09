@@ -1,7 +1,6 @@
 import json
 from dataclasses import dataclass
-
-from apk_editor.apk import DecompiledAPK
+from pathlib import Path
 
 
 def arsc_id_to_hex(type_id, entry_id):
@@ -111,12 +110,11 @@ class ARSCSpec:
 
 
 class ARSC:
-    def __init__(self, apk: DecompiledAPK) -> None:
-        self.decompiled_apk = apk
-        self.arsc_path = self.decompiled_apk.resources_arsc
+    def __init__(self, arsc_file: Path) -> None:
+        self.path = arsc_file
         self.specs: dict[str, ARSCSpec] = {}
         self.empty_specs: list[dict | None] = []
-        with self.arsc_path.open("rb") as f:
+        with self.path.open("rb") as f:
             self.arsc_data = json.load(f)
         self.package_name = self.arsc_data["packages"][0]["package_name"]
         self.package_id = self.arsc_data["packages"][0]["package_id"]
@@ -179,5 +177,5 @@ class ARSC:
                 }
             ],
         }
-        with self.arsc_path.open("w") as f:
+        with self.path.open("w") as f:
             json.dump(arsc, f)

@@ -20,7 +20,7 @@ def test_apk():
     )
     assert main_activity_path, "MainActivity not found"  # make pyright happy
     assert main_activity_path.is_file(), "MainActivity not found"
-    arsc = ARSC(decompiled_apk)
+    arsc = ARSC(decompiled_apk.resources_arsc)
     assert "string" in arsc.specs, "String spec not found"
     app_name = arsc.specs["string"].default.entries["app_name"]
     assert not isinstance(
