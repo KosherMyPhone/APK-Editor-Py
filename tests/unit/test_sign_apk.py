@@ -15,7 +15,7 @@ test_apk_path = apks_dir / "open_recents.apk"
 def test_sign_apk():
     dir = TemporaryDirectory()
     out_path = Path(dir.name + "/signed.apk")
-    key = SigningKey(x509_path, pk8_path)
+    key = SigningKey(pk8_path=pk8_path, x509_path=x509_path)
     sign_apk(test_apk_path, key, out_path)
     check_cert_cmd = [
         "java",
